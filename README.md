@@ -12,9 +12,9 @@ optional arguments:
   -f, --file    Check list of IPs
 
 
-Find details from a single IP or from a file listing of IP addresses.
+##Find details from a single IP or from a file listing of IP addresses.
 
-SINGLE IP ADDRESS EXAMPLE:
+#SINGLE IP ADDRESS EXAMPLE:
   -% InfoJaeger.py - s <ip-address>
   
 This command will print the ARIN details for 
@@ -32,10 +32,7 @@ Results:
   CIDR: 8.8.8.0/24
   Country: US
 
-LIST OF IP ADDRESSES EXAMPLE:
+#LIST OF IP ADDRESSES EXAMPLE:
   -% InfoJaeger.py -f hostslist.txt
   
   This command will get the ARIN details for all IP addresses in the list, return the details, and store them in a file called Outfile.txt
-
-
-
