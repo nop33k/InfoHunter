@@ -1,4 +1,4 @@
-# Name          :   InfoJaeger
+# Name          :   InfoHunter
 # Author        :   No_P33k
 # Last edited   :   February 2020
 # Purpose       :   This script is meant to give users the ability to enter a single
