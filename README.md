@@ -1,5 +1,5 @@
-# InfoJaeger
-usage: InfoJaeger.py [-h] [-s | -f] [UserInput]
+# InfoHunter
+usage: InfoHunter.py [-h] [-s | -f] [UserInput]
 
 Run security check against single IP addresses or list of IPs
 
@@ -13,7 +13,7 @@ optional arguments:
 
 
 ## SINGLE IP ADDRESS EXAMPLE:
-  -% InfoJaeger.py - s <ip-address>
+  -% InfoHunter.py - s <ip-address>
   
 This command will print the ARIN details for 
 
@@ -22,7 +22,7 @@ This command will print the ARIN details for
   Country: <details-here>
 
 For Instance:
-  -% InfoJaeger.py -s 8.8.8.8
+  -% InfoHunter.py -s 8.8.8.8
 
 Results:
 
@@ -31,6 +31,6 @@ Results:
   Country: US
 
 ## LIST OF IP ADDRESSES EXAMPLE:
-  -% InfoJaeger.py -f hostslist.txt
+  -% InfoHunter.py -f hostslist.txt
   
   This command will get the ARIN details for all IP addresses in the list, return the details, and store them in a file called Outfile.txt
