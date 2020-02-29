@@ -12,17 +12,35 @@ import ipwhois
 
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(description="Run security check against single IP addresses or list of IPs")
+    # Create initial parser and arguments
+    parser = argparse.ArgumentParser(prog="InfoHunter",
+                                     description="Run security check against single IP addresses or list of IPs")
     parser.add_argument("-s", "--single", action="store_true", help="Check single IP")
     parser.add_argument("-f", "--file", action="store_true", help="Check list of IPs")
+    parser.add_argument("-v", "--virustotal", action="store_true", help="Add Virus Total Results")
     parser.add_argument("UserInput", type=str, nargs="?", help="Enter single IP or Filename")
     args = parser.parse_args()
+    use_arguments(args)
 
+
+def use_arguments(args):
+    # take action on the arguments based on selection
+    # action can only be taken if positional argument exists
     if args.UserInput:
+
+        # take action only if optional argument is selected, else return error.
         if args.single:
             print("\nChecking security details for single IP: {}".format(args.UserInput))
             check_ip(args.UserInput, False)
-        elif args.file:
+        if args.virustotal:
+            print("Checking security details, including VirusTotal for all IPs in file {}".format(args.UserInput))
+            if args.single:
+                # change this to do additional checks
+                check_ip(args.UserInput, False)
+            else:
+                # change this to do additional checks
+                check_ip(args.UserInput, True)
+        if args.file:
             print("\nChecking security details for all IPs in file {}".format(args.UserInput))
             file_open(str(args.UserInput))
         else:
@@ -40,7 +58,7 @@ def file_open(infile):
             check_ip(line.strip(), True)
         f.close()
     except IOError:
-        print("No such file. Please check the file name and try again.")
+        print("No such file. Please check the file name and try again.\n")
 
 
 def check_ip(ip, single):
