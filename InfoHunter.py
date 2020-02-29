@@ -13,9 +13,8 @@ import ipwhois
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="Run security check against single IP addresses or list of IPs")
-    group = parser.add_mutually_exclusive_group()
-    group.add_argument("-s", "--single", action="store_true", help="Check single IP")
-    group.add_argument("-f", "--file", action="store_true", help="Check list of IPs")
+    parser.add_argument("-s", "--single", action="store_true", help="Check single IP")
+    parser.add_argument("-f", "--file", action="store_true", help="Check list of IPs")
     parser.add_argument("UserInput", type=str, nargs="?", help="Enter single IP or Filename")
     args = parser.parse_args()
 
