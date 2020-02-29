@@ -49,7 +49,6 @@ def check_ip(ip, single):
         obj = IPWhois(ip)
         try:
             res = (obj.lookup_rdap())
-            print(res)
             asn_info = "ASN: " + res['asn'] + '\n' + "CIDR: " + res['asn_cidr'] + '\n'
             country_info = "Country: " + res['asn_country_code'] + "\n"
             ipdetails = asn_info + country_info + "\n"
