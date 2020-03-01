@@ -9,7 +9,11 @@ import argparse
 import time
 from ipwhois import IPWhois
 import ipwhois
+import requests
 
+# set global variable for output file (if needed)
+timestr = time.strftime("%Y%m%d-%H%M%S")
+outputfile = timestr + "-output.txt"
 
 def parse_arguments():
 
@@ -44,12 +48,12 @@ def use_arguments(args):
             # check if this is single IP check
             if args.single:
                 print("Checking security details, including VirusTotal for single IP: {}".format(args.UserInput))
-                # change this to do additional checks
-                # Insert VT related function call here
+                check_virustotal(args.UserInput, False)
 
             # check if this is a file of IPs
             elif args.file:
                 print("Checking security details, including VirusTotal for all IPs in file: {}".format(args.UserInput))
+
                 # change this to do additional checks
                 # Insert VT related function call here.
 
@@ -101,6 +105,7 @@ def check_ip(ip, multiple):
         # Get details and catch error if ASN Registry error
         try:
             res = (obj.lookup_rdap())
+            print(res)
             asn_info = "ASN: " + res['asn'] + '\n' + "CIDR: " + res['asn_cidr'] + '\n'
             country_info = "Country: " + res['asn_country_code'] + "\n"
             ipdetails = asn_info + country_info + "\n"
@@ -120,11 +125,36 @@ def check_ip(ip, multiple):
     except ValueError:
         print("Please enter a valid IP address")
 
+def check_virustotal(ip, multiple):
+
+    # check Virus Total for IP details - prerequisite is file called vtapikey.txt
+    print("Checking Virustotal free - only 4 IPs per minute")
+
+    # Get API key or throw error if not found
+    try:
+        with open('vtapikey.txt') as f:
+            apikey = f.readline()
+    except IOError:
+        print("Please make sure vtapikey.txt exists and has legitimate Virustotal API key")
+
+    url = 'https://www.virustotal.com/vtapi/v2/ip-address/report'
+
+    params = {'apikey': apikey, 'ip': ip}
+
+    response = requests.get(url, params=params)
+
+    details = response.json()
+    responsestring = "Details: \n" + str(details["detected_downloaded_samples"])
+    print(responsestring)
+
+    if multiple:
+        write_to_file(responsestring)
+
 
 def write_to_file(details):
 
     # write to default file name
-    with open("Outfile.txt", "a+") as outfile:
+    with open(outputfile, "a+") as outfile:
         outfile.write(details)
         outfile.close()
 
